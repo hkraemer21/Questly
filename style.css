@@ -1,0 +1,81 @@
+* {
+    --primary-font: 'Eagle Lake', serif;
+    --link-color: #889c9b;
+}
+
+.primary-font {
+    font-family: var(--primary-font);
+}
+
+.background-primary {
+    background-color: #d4b996;
+}
+
+.background-secondary {
+    background-color: #402219;
+}
+
+.background-dark {
+    background-color: #22130d;
+}
+
+#sticky-sidebar {
+    height: calc(100vh - 56px);
+
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--link-color);
+    color: black;
+}
+
+.accordion-button {
+    background-color: #402219;
+    border: none;
+    color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #22130d;
+    color: white;
+}
+
+
+.btn-hover:hover {
+    background-color: var(--link-color);
+    color: white;
+}
+
+.game-card {
+    width: 100%;
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+
+footer {
+    flex-shrink: 0;
+}
