@@ -1,6 +1,12 @@
 * {
     --primary-font: 'Eagle Lake', serif;
     --link-color: #889c9b;
+    --footer-height: 72px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--link-color);
 }
 
 .primary-font {
@@ -17,6 +23,34 @@
 
 .background-dark {
     background-color: #22130d;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.nav-options {
+    border: none;
+    color: white;
+    width: 100%;
+}
+
+#sidebar {
+    position: relative;
+    padding-bottom: calc(var(--footer-height) + 1rem);
+}
+
+.sidebar-login-btn {
+    position: absolute;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    left: 0;
+    right: 0;
+    bottom: var(--footer-height);
+    width: 100%;
+    font-size: x-large;
+    border-radius: 0;
 }
 
 #sticky-sidebar {
@@ -73,9 +107,12 @@ a:hover {
     display: block;
 }
 
-
+.game-card-body span {
+    font-size: 2rem;
+}
 
 
 footer {
+    height: var(--footer-height);
     flex-shrink: 0;
 }
