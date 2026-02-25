@@ -1,0 +1,24 @@
+{
+  "name": "questly",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/hkraemer21/Questly#readme",
+  "bugs": {
+    "url": "https://github.com/hkraemer21/Questly/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hkraemer21/Questly.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "home.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.97.3"
+  }
+}
