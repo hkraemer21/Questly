@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "home.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "sass scss/app.scss css/app.css --watch"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

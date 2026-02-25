@@ -16,9 +16,9 @@ const app = createApp({
             },
 
             gameList: [
-                {name: 'Resident Evil 2 Remake', image: '/images/re2remake.jpeg', platform: 'PC', pin: true, favorite: true},
-                {name: 'God of War: Ragnarok', image: '/images/gowragnarok.jpg', platform: 'PS5', pin: false, favorite: true},
-                {name: 'The Last of Us Part II', image: '/images/tloup2.jpg', platform: 'PS5', pin: false, favorite: false},
+                {name: 'Resident Evil 2 Remake', image: 're2remake.jpeg', platform: 'PC', pin: true, favorite: true},
+                {name: 'God of War: Ragnarok', image: 'gowragnarok.jpg', platform: 'PS5', pin: false, favorite: true},
+                {name: 'The Last of Us Part II', image: 'tloup2.jpg', platform: 'PS5', pin: false, favorite: false},
 
             ],
 
@@ -52,13 +52,21 @@ const app = createApp({
 
     //mounted:  called after the instance has been mounted,
     mounted: function () {
+        if(localStorage.getItem('gameList')) {
+            this.gameList = JSON.parse(localStorage.getItem('gameList'));
+        }
 
     },
 
     // watch:   calls the function if the value changes
     // https://travishorn.com/add-localstorage-to-your-vue-app-in-2-lines-of-code-56eb2c9f371b
     watch: {
-
+        gameList: {
+            handler: function (newVal) {
+                localStorage.setItem('gameList', JSON.stringify(newVal));
+            },
+            deep: true
+        }
     },
 });
 

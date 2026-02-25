@@ -1,0 +1,144 @@
+$primary-font: 'Eagle Lake', serif;
+
+$primary: #d4b996;
+$secondary: #402219;
+$dark: #22130d;
+$link: #889c9b;
+
+$footer-height: 72px;
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+    font-family: $primary-font;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid $link;
+}
+
+.primary-font {
+    font-family: $primary-font;
+}
+
+.background-primary {
+    background-color: $primary
+}
+
+.background-secondary {
+    background-color: $secondary;
+}
+
+.background-dark {
+    background-color: $dark;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.nav-options {
+    border: none;
+    color: white;
+    width: 100%;
+}
+
+#sidebar {
+    position: relative;
+    padding-bottom: calc($footer-height + 1rem);
+}
+
+.sidebar-login-btn {
+    position: absolute;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    left: 0;
+    right: 0;
+    bottom: $footer-height;
+    width: 100%;
+    font-size: large;
+    border-radius: 0;
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.active-page {
+    background-color: $link;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: $link;
+    color: black;
+}
+
+.accordion-button {
+    background-color: $dark;
+    border: none;
+    color: white;
+    height: 40px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: $secondary;
+    color: white;
+}
+
+
+.btn-hover:hover {
+    background-color: $link;
+    color: white;
+}
+
+.game-card {
+    width: 100%;
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.game-card-body span {
+    font-size: 2rem;
+}
+
+.submit-button {
+    background-color: $dark;
+    color: white;
+    border: none;
+    width: 30%;
+    padding: 0.75rem;
+    font-size: large;
+    align-items: center;
+}
+
+.submit-button:hover {
+    background-color: $link;
+    color: white;
+}
+
+
+footer {
+    height: $footer-height;
+    flex-shrink: 0;
+}
