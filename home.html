@@ -64,7 +64,7 @@
                                         <div class="accordion-body background-secondary p-0">
                                             <a class="nav-link nav-options w-100 btn-hover overflow-y-hidden"
                                                 v-for="(game, g) in gameList" :key="game.name"
-                                                href="game-info.html">{{game.name}}</a>
+                                                :href="">{{game.name}}</a>
                                             <a class="nav-link nav-options btn-hover" href="add-game.html">Add
                                                 Game</a>
                                         </div>
@@ -92,7 +92,7 @@
                                             <img :src="'/images/' + game.image" class="card-img-top" alt="...">
                                             <div class="card-img-overlay d-flex align-items-end p-0">
                                                 <div class="card-body bg-dark bg-opacity-75">
-                                                    <a class="card-text text-white text-center w-100 mb-0" href="game-info.html">{{
+                                                    <a class="card-text text-white text-center w-100 mb-0" :href="">{{
                                                         game.name }}</a>
                                                 </div>
                                             </div>
