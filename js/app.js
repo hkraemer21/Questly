@@ -12,9 +12,11 @@ const app = createApp({
                 platform: '',
                 pin: false,
                 favorite: false,
+                complete: false,
                 achievements: [],
-
             },
+
+            selectedGame: null,
 
             newAchievement: {
                 name: '',
@@ -26,21 +28,21 @@ const app = createApp({
 
             gameList: [
                 {
-                    name: 'Resident Evil 2 Remake', image: 're2remake.jpeg', platform: 'PC', pin: true, favorite: true, achievements: [
+                    name: 'Resident Evil 2 Remake', image: 're2remake.jpeg', platform: 'PC', pin: true, favorite: true, complete: true, achievements: [
                         { name: 'Welcome to Raccoon City', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false },
                         { name: 'Survivor', description: 'Complete the game on Normal or higher difficulty.', increment: 1, pin: false, favorite: false },
                         { name: 'Master of Unlocking', description: 'Unlock all the weapons and items in the game.', increment: 1, pin: false, favorite: false },
                     ]
                 },
                 {
-                    name: 'God of War: Ragnarok', image: 'gowragnarok.jpg', platform: 'PS5', pin: false, favorite: true, achievements: [
+                    name: 'God of War: Ragnarok', image: 'gowragnarok.jpg', platform: 'PS5', pin: false, favorite: true, complete: false, achievements: [
                         { name: 'Ragnarok Unleashed', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false },
                         { name: 'Valhalla Conqueror', description: 'Complete the game on Hard difficulty.', increment: 1, pin: false, favorite: false },
                         { name: 'Mythical Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: false },
                     ]
                 },
                 {
-                    name: 'The Last of Us Part II', image: 'tloup2.jpg', platform: 'PS5', pin: false, favorite: false, achievements: [
+                    name: 'The Last of Us Part II', image: 'tloup2.jpg', platform: 'PS5', pin: false, favorite: false, complete: false, achievements: [
                         { name: 'Survivor', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false },
                         { name: 'Master of Stealth', description: 'Complete the game using only stealth tactics.', increment: 1, pin: false, favorite: false },
                         { name: 'Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: false },
@@ -49,6 +51,9 @@ const app = createApp({
 
             ],
 
+            isPinHovered: false,
+
+
 
 
         };
@@ -56,6 +61,10 @@ const app = createApp({
 
     // methods: usually "events" triggered by v-on:
     methods: {
+        selectGame: function (game) {
+            this.selectedGame = game;
+        },
+
         addNewGame: function () {
             this.gameList.push(this.newGame);
 
@@ -95,6 +104,10 @@ const app = createApp({
     mounted: function () {
         if (localStorage.getItem('gameList')) {
             this.gameList = JSON.parse(localStorage.getItem('gameList'));
+        }
+
+        if (this.gameList.length > 0) {
+            this.selectedGame = this.gameList[0];
         }
 
     },

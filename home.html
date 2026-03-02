@@ -18,93 +18,294 @@
 
 <body>
 
-    <main class="primary-font">
 
-        <!-- mobile nav -->
-        <div class="collapse d-md-none background-secondary" id="mobileNav">
-            <div class="background-dark p-3">
-                <a class="d-block mb-3 text-white text-decoration-none" href="home.html"><i class="bi bi-house-door-fill"></i> Home</a>
-                <a class="d-block mb-3 text-white text-decoration-none" href="home.html"><i class="bi bi-door-open-fill"></i> Login</a>
-                <a class="d-block mb-1 text-white text-decoration-none" href=""><i class="bi bi-plus-lg"></i> Add
-                    Game</a>
-            </div>
-        </div>
-        <nav class="navbar navbar-dark background-dark d-md-none">
-            <div class="container-fluid">
-                <a class="brand-name m-1" href="home.html"><img class="logo" src="/images/scroll-icon-6.png"
-                        alt="">Questly</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav"
-                    aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
+    <main class="primary-font wooden-background">
 
         <div id="app" class="container-fluid">
-            <div class="row vh-100">
-                <div class="d-none d-md-block col-md-2 p-0">
-                    <nav id="sidebar"
-                        class="h-100 flex-column align-items-stretch border-end background-dark p-2">
-                        <nav class="nav nav-pills flex-column">
-                            <a class="brand-name m-1" href="home.html"><img class="logo" src="/images/scroll-icon-6.png"
-                                    alt="">Questly</a>
-                            <hr>
-                            <a class="nav-link nav-options btn-hover active-page mb-2" href="home.html">Home</a>
-                            <div class="accordion" id="gameAccordion">
-                                <div class="accordion-item border border-0">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#gameCollapse" aria-expanded="true"
-                                            aria-controls="gameCollapse">
-                                            My Games
-                                        </button>
-                                    </h2>
-                                    <div id="gameCollapse" class="accordion-collapse collapse"
-                                        data-bs-parent="#gameAccordion">
-                                        <div class="accordion-body background-secondary p-0">
-                                            <a class="nav-link nav-options w-100 btn-hover overflow-y-hidden"
-                                                v-for="(game, g) in gameList" :key="game.name"
-                                                :href="">{{game.name}}</a>
-                                            <a class="nav-link nav-options btn-hover" href="add-game.html">Add
-                                                Game</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>
-                        <button class="btn btn-primary background-secondary border border-0 sidebar-login-btn btn-hover"
-                            data-bs-toggle="modal" data-bs-target="#loginModal">Log in or Create Account</button>
-                    </nav>
+
+            <ul class="nav nav-underline navigation bg-black bg-opacity-75 justify-content-center">
+                <li class="nav-item">
+                    <a class="brand-name m-1" href="home.html"><img class="logo" src="/images/scroll-icon-6.png"
+                            alt="">Questly</a>
+                </li>
+            </ul>
+
+            <div class="row min-vh-100">
+
+                <div class="col-1">
+
                 </div>
 
-                <div class="col-12 col-md-10 background-primary">
-                    <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true"
-                        class="" tabindex="0">
-                        <div id="">
-                            <h1 class="pt-4 pb-4 text-black align-center">Start tracking your achievements</h1>
-                            <div class="container-fluid">
+                <div
+                    class="col-12 col-md-10 parchment-background d-flex flex-column align-items-center justify-content-start">
 
-                                <div class="row">
+                    <h1 class="text-black text-center p-3">Start tracking your achievements</h1>
+                    <img src="/images/header-divider.png" alt="header divider" class="header-divider mb-4">
 
-                                    <div class="col-sm-6 col-lg-3 col-md-6 mb-2" v-for="(game, g) in gameList" :key="game.name">
+                    <div class="container-fluid border border-black mb-4 w-75">
 
-                                        <div class="card game-card" style="width: 100%;">
-                                            <img :src="'/images/' + game.image" class="card-img-top" alt="...">
-                                            <div class="card-img-overlay d-flex align-items-end p-0">
-                                                <div class="card-body bg-dark bg-opacity-75">
-                                                    <a class="card-text text-white text-center w-100 mb-0" :href="">{{
-                                                        game.name }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="row">
 
-                                    </div>
+                            <div class="col-12 col-md-3 border border-2 border-black text-center pt-4">
 
-                                </div>
+                                <a href="" class="btn fw-bolder fst-italic">New Game</a>
+                                <img src="/images/game-title-divider.png" alt="header divider"
+                                    class="game-divider mb-2">
+
+                                <!-- desktop version of game list -->
+                                <ul class="ps-2 desktop" v-for="(game, g) in gameList" :key="game.name">
+
+                                    <li class="mt-3 text-break fw-bold">
+                                        <a href="#" class="text-decoration-none text-black"
+                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
+                                        <hr>
+                                    </li>
+
+                                </ul>
+
+                                <!-- mobile version of game list -->
+                                <select class="form-select form-select-lg mb-3 mobile" aria-label="Game select">
+                                    <option selected v-for="(game, g) in gameList" :key="game.name" class="fw-bold">
+                                        {{ game.name }}
+                                    </option>
+                                </select>
+
 
                             </div>
+
+                            <div
+                                class="col-12 col-md-9 border border-2 border-black d-flex flex-column align-items-center justify-content-start">
+                                <div v-if="selectedGame" class="p-3">
+                                    <div class="text-center">
+                                        <div class="row">
+                                            <div class="col-1 position-relative ">
+                                                <a href="" class="position-absolute top-0 end-0 text-black">
+                                                    <img :src="selectedGame.pin ? '/images/waypoint-filled.png' : '/images/waypoint.png'"
+                                                        alt="" class="pin-img">
+                                                </a>
+                                            </div>
+                                            <div class="col-1 position-relative ">
+                                            </div>
+                                            <div class="col-8">
+                                                <h2 class="text-break">{{ selectedGame.name }} <i
+                                                        :class="selectedGame.favorite ? 'bi bi-star-fill' : 'bi bi-star text-secondary'"></i>
+                                                </h2>
+                                            </div>
+                                            <div class="col-1 position-relative ">
+                                            </div>
+                                            <div class="col-1 position-relative">
+                                                <a href="" class="position-absolute top-0 end-0 text-black">
+                                                    <img src="/images/quill.png" alt="" class="quill-img">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <p class="mb-2"><strong>Platform:</strong> {{ selectedGame.platform }}</p>
+                                        <div class="game-img-wrap">
+                                            <img :src="'/images/' + selectedGame.image"
+                                                :alt="selectedGame.name + ' image'" class="game-img mb-2">
+                                        </div>
+                                        <img src="/images/game-divider.png" alt="" class="game-divider">
+                                    </div>
+
+                                    <h3 class="h3 text-center">Achievements</h3>
+                                    <ul class="ps-3">
+                                        <li v-for="(achievement, a) in selectedGame.achievements" :key="a" class="mb-2">
+                                            <strong>{{ achievement.name }}</strong>
+                                            <div>{{ achievement.description }}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div v-else class="p-3">
+                                    <h2>Select a game</h2>
+                                </div>
+
+                                <!-- <ul>
+                                    <li>
+                                        asdjansdkjansd
+                                    </li>
+                                    <li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li><li>
+                                        asdjansdkjansd
+                                    </li>
+                                </ul> -->
+
+
+                            </div>
+
                         </div>
+
+
                     </div>
+
+                </div>
+
+                <div class="col-1">
+
                 </div>
             </div>
         </div>
@@ -113,37 +314,7 @@
     </main>
 
 
-    <div class="modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content background-dark">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-white" id="loginModalLabel">Login or Create Account</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="inputEmail" class="form-label text-white">Email address</label>
-                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text text-white"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="inputPassword" class="form-label text-white">Password</label>
-                            <input type="password" class="form-control" id="inputPassword">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-dark">Log in</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <footer
-        class="background-dark text-center border-top border-light-subtle text-lg-start text-light mt-4 fixed-bottom primary-font">
+    <footer class="">
 
         <div class="text-center pb-4 mt-4">
             © 2026 Hannah Kraemer
