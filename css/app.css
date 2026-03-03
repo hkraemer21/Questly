@@ -11863,6 +11863,21 @@ body {
   font-family: "Eagle Lake", serif;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+p {
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
 .parchment-background {
   background-image: url("/images/parchment-bg.jpg");
   background-size: cover;
@@ -11887,13 +11902,18 @@ body {
   margin-right: 10px;
 }
 
+.brand-name {
+  font-size: 1.5rem;
+  color: white;
+}
+
 .header-divider {
   width: 50%;
   height: auto;
 }
 
 h1, .h1 {
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 ul {
@@ -11914,15 +11934,18 @@ ul hr {
   display: none;
 }
 
-.form-select {
-  padding: 0;
+.accordion, .accordion-item, .accordion-header, .accordion-button, .accordion-body {
   background-color: transparent;
-  border: 0;
 }
 
-.form-select option {
-  padding: 0.5rem;
-  background-color: black;
+.accordion {
+  --bs-border-color: black;
+  --bs-border-radius: 0;
+  --bs-accordion-border-width: 2px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
@@ -11956,24 +11979,47 @@ ul hr {
   width: 75%;
 }
 
-i:hover {
+.edit-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.edit-btn:hover {
   cursor: pointer;
   opacity: 0.5;
 }
 
-.brand-name {
-  font-size: 1.5rem;
-  color: white;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-a:hover {
+.btn-icon:hover {
   cursor: pointer;
   opacity: 0.5;
+}
+
+.checkbox {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 0px;
+}
+
+.form-check-input:checked {
+  background-color: black;
+  border-color: #000000;
+}
+
+.form-check-input[type=checkbox] {
+  border-radius: 0;
+}
+
+.increment-btn {
+  border: 2px solid black;
+  border-radius: 0px;
+}
+
+.achieve-pin {
+  width: auto;
+  height: 50px;
 }
 
 footer {

@@ -42,33 +42,136 @@
                     <h1 class="text-black text-center p-3">Start tracking your achievements</h1>
                     <img src="/images/header-divider.png" alt="header divider" class="header-divider mb-4">
 
-                    <div class="container-fluid border border-black mb-4 w-75">
+                    <div class="container-fluid border border-black mb-4 w-100">
 
                         <div class="row">
 
                             <div class="col-12 col-md-3 border border-2 border-black text-center pt-4">
 
-                                <a href="" class="btn fw-bolder fst-italic">New Game</a>
+                                <a href="" class="btn fw-bolder fst-italic fs-4 text-decoration-underline">Add Game</a>
                                 <img src="/images/game-title-divider.png" alt="header divider"
                                     class="game-divider mb-2">
 
+
                                 <!-- desktop version of game list -->
-                                <ul class="ps-2 desktop" v-for="(game, g) in gameList" :key="game.name">
+                                <div class="container desktop">
+                                    <h4 class="fw-bolder fst-italic fs-5 pt-4">Pinned Games</h4>
+                                    <img src="/images/game-divider.png" alt="" class="game-divider">
+                                    <ul class="ps-2 desktop" v-for="(game, g) in pinnedGames" :key="game.name">
 
-                                    <li class="mt-3 text-break fw-bold">
-                                        <a href="#" class="text-decoration-none text-black"
-                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
-                                        <hr>
-                                    </li>
+                                        <li class="mt-3 text-break">
+                                            <a href="#" class="text-decoration-none text-black"
+                                                @click.prevent="selectGame(game)">{{ game.name }}
+                                                <hr>
+                                            </a>
+                                        </li>
 
-                                </ul>
+                                    </ul>
+
+                                    <p><i class="bi bi-suit-diamond-fill"></i></p>
+
+                                    <h4 class="fw-bolder fst-italic fs-5 pt-4">Favorited Games</h4>
+                                    <img src="/images/game-divider.png" alt="" class="game-divider">
+                                    <ul class="ps-2 desktop" v-for="(game, g) in favoritedGames" :key="game.name">
+
+                                        <li class="mt-3 text-break">
+                                            <a href="#" class="text-decoration-none text-black"
+                                                @click.prevent="selectGame(game)">{{ game.name }}
+                                                <hr>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                    <p><i class="bi bi-suit-diamond-fill"></i></p>
+
+
+                                    <h4 class="fw-bolder fst-italic fs-5 pt-4">All Games</h4>
+                                    <img src="/images/game-divider.png" alt="" class="game-divider">
+                                    <ul class="ps-2 desktop" v-for="(game, g) in gameList" :key="game.name">
+
+                                        <li class="mt-3 text-break">
+                                            <a href="#" class="text-decoration-none text-black"
+                                                @click.prevent="selectGame(game)">{{ game.name }}
+                                                <hr>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
 
                                 <!-- mobile version of game list -->
-                                <select class="form-select form-select-lg mb-3 mobile" aria-label="Game select">
-                                    <option selected v-for="(game, g) in gameList" :key="game.name" class="fw-bold">
-                                        {{ game.name }}
-                                    </option>
-                                </select>
+                                <div class="accordion mb-3 mobile" id="mobileGameList">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#pinnedGames"
+                                                aria-expanded="true" aria-controls="pinnedGames">
+                                                Pinned Games
+                                            </button>
+                                        </h2>
+                                        <div id="pinnedGames" class="accordion-collapse collapse"
+                                            data-bs-parent="#mobileGameList">
+                                            <div class="accordion-body">
+                                                <ul class="ps-2" v-for="(game, g) in pinnedGames" :key="game.name">
+
+                                                    <li class="mt-3 text-break fw-bold">
+                                                        <a href="#" class="text-decoration-none text-black"
+                                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
+                                                        <hr>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#favoriteGames"
+                                                aria-expanded="false" aria-controls="favoriteGames">
+                                                Favorited Games
+                                            </button>
+                                        </h2>
+                                        <div id="favoriteGames" class="accordion-collapse collapse"
+                                            data-bs-parent="#mobileGameList">
+                                            <div class="accordion-body">
+                                                <ul class="ps-2" v-for="(game, g) in favoritedGames" :key="game.name">
+
+                                                    <li class="mt-3 text-break fw-bold">
+                                                        <a href="#" class="text-decoration-none text-black"
+                                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
+                                                        <hr>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#allGames"
+                                                aria-expanded="false" aria-controls="allGames">
+                                                All Games
+                                            </button>
+                                        </h2>
+                                        <div id="allGames" class="accordion-collapse collapse"
+                                            data-bs-parent="#mobileGameList">
+                                            <div class="accordion-body">
+                                                <ul class="ps-2" v-for="(game, g) in gameList" :key="game.name">
+
+                                                    <li class="mt-3 text-break fw-bold">
+                                                        <a href="#" class="text-decoration-none text-black"
+                                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
+                                                        <hr>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -87,16 +190,18 @@
                                             <div class="col-1 position-relative ">
                                             </div>
                                             <div class="col-8">
-                                                <h2 class="text-break">{{ selectedGame.name }} <i
+                                                <h2 class="text-break">{{ selectedGame.name }} <i class="btn-icon"
                                                         :class="selectedGame.favorite ? 'bi bi-star-fill' : 'bi bi-star text-secondary'"></i>
                                                 </h2>
                                             </div>
                                             <div class="col-1 position-relative ">
                                             </div>
                                             <div class="col-1 position-relative">
-                                                <a href="" class="position-absolute top-0 end-0 text-black">
+                                                <button type="button"
+                                                    class="position-absolute top-0 end-0 text-black edit-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#editGameModal">
                                                     <img src="/images/quill.png" alt="" class="quill-img">
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                         <p class="mb-2"><strong>Platform:</strong> {{ selectedGame.platform }}</p>
@@ -107,14 +212,100 @@
                                         <img src="/images/game-divider.png" alt="" class="game-divider">
                                     </div>
 
-                                    <h3 class="h3 text-center">Achievements</h3>
-                                    <ul class="ps-3">
-                                        <li v-for="(achievement, a) in selectedGame.achievements" :key="a" class="mb-2">
-                                            <strong>{{ achievement.name }}</strong>
-                                            <div>{{ achievement.description }}</div>
+                                    <h3 class="h3 text-center m-3">Achievements</h3>
+                                    <ul class="ps-3w-100" v-if="selectedGame.achievements.length > 0">
+                                        <li v-for="(achievement, a) in selectedGame.achievements" :key="a"
+                                            class="m-2 border border-0 border-black">
+
+                                            <div class="row">
+
+                                                <div class="col-1 p-0">
+                                                    <div class="h-100 d-flex align-items-center justify-content-center">
+                                                        <input class="form-check-input checkbox" type="checkbox"
+                                                            :id="'achievementCheck' + a" value="" aria-label="...">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-11">
+                                                    <div class="row mb-2">
+
+                                                        <div class="col-10">
+                                                            <strong class="fs-3 text-center">{{ achievement.name }}</strong>
+                                                        </div>
+
+                                                        <div class="col-2">
+
+                                                            <div class="row">
+                                                                <div
+                                                                    class="col-12 d-flex align-items-center justify-content-end">
+
+                                                                    <a href="" class="d-flex align-items-center justify-content-end">
+                                                                        <img :src="achievement.pin ? '/images/waypoint-filled.png' : '/images/waypoint.png'"
+                                                                            alt="" class="achieve-pin">
+                                                                    </a>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+                                                            <div>{{ achievement.description }}</div>
+                                                        </div>
+                                                    
+
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <div class="col-8"></div>
+
+                                                        <div class="col-4">
+
+                                                            <div class="row">
+                                                                <div
+                                                                    class="col-6 d-flex align-items-center justify-content-center">
+                                                                    <span
+                                                                        class="fs-2 mb-2 border border-0 border-bottom border-black me-2">{{
+                                                                        achievement.increment }}</span>
+                                                                    <p>time(s)</p>
+                                                                </div>
+
+                                                                <div
+                                                                    class="col-3 d-flex align-items-center justify-content-center p-0">
+                                                                    <button class="btn btn-sm btn-dark increment-btn"
+                                                                        @click="achievement.increment++"><i
+                                                                            class="bi bi-plus-lg"></i></button>
+
+                                                                </div>
+
+                                                                <div class="col-3 d-flex align-items-center p-0">
+                                                                    <button class="btn btn-sm increment-btn"
+                                                                        @click="achievement.increment > 0 ? achievement.increment-- : 0"><i
+                                                                            class="bi bi-dash-lg text-dark"></i></button>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <hr>
                                         </li>
                                     </ul>
                                 </div>
+
                                 <div v-else class="p-3">
                                     <h2>Select a game</h2>
                                 </div>
