@@ -3,7 +3,7 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 
 const app = createApp({
-    // data: all the data for the app
+
     data: function () {
         return {
             newGame: {
@@ -11,7 +11,6 @@ const app = createApp({
                 image: '',
                 platform: '',
                 pin: false,
-                favorite: false,
                 complete: false,
                 achievements: [],
             },
@@ -23,29 +22,30 @@ const app = createApp({
                 description: '',
                 increment: 0,
                 pin: false,
+                favorite: false,
                 complete: false,
             },
 
             gameList: [
                 {
-                    name: 'Resident Evil 2 Remake', image: 're2remake.jpeg', platform: 'PC', pin: true, favorite: true, complete: true, achievements: [
-                        { name: 'Welcome to Raccoon City', description: 'Complete the game on any difficulty.', increment: 1, pin: false, complete: true },
-                        { name: 'Survivor', description: 'Complete the game on Normal or higher difficulty.', increment: 1, pin: false, complete: false },
-                        { name: 'Master of Unlocking', description: 'Unlock all the weapons and items in the game.', increment: 1, pin: false, complete: false },
+                    name: 'Resident Evil 2 Remake', image: 'https://placehold.co/300x400', platform: 'PC', pin: true, complete: true, achievements: [
+                        { name: 'Welcome to Raccoon City', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: true, complete: true },
+                        { name: 'Survivor', description: 'Complete the game on Normal or higher difficulty.', increment: 1, pin: false, favorite: false, complete: false },
+                        { name: 'Master of Unlocking', description: 'Unlock all the weapons and items in the game.', increment: 1, pin: false, favorite: false, complete: false },
                     ]
                 },
                 {
-                    name: 'God of War: Ragnarok', image: 'gowragnarok.jpg', platform: 'PS5', pin: false, favorite: true, complete: false, achievements: [
-                        { name: 'Ragnarok Unleashed', description: 'Complete the game on any difficulty.', increment: 1, pin: false, complete: false },
-                        { name: 'Valhalla Conqueror', description: 'Complete the game on Hard difficulty.', increment: 1, pin: false, complete: false },
-                        { name: 'Mythical Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, complete: false },
+                    name: 'God of War: Ragnarok', image: 'https://placehold.co/300x400', platform: 'PS5', pin: false, complete: false, achievements: [
+                        { name: 'Ragnarok Unleashed', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false, complete: false },
+                        { name: 'Valhalla Conqueror', description: 'Complete the game on Hard difficulty.', increment: 1, pin: false, favorite: false, complete: false },
+                        { name: 'Mythical Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: true, complete: false },
                     ]
                 },
                 {
-                    name: 'The Last of Us Part II', image: 'tloup2.jpg', platform: 'PS5', pin: false, favorite: false, complete: false, achievements: [
-                        { name: 'Survivor', description: 'Complete the game on any difficulty.', increment: 1, pin: false, complete: false },
-                        { name: 'Master of Stealth', description: 'Complete the game using only stealth tactics.', increment: 1, pin: false, complete: false },
-                        { name: 'Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, complete: false },
+                    name: 'The Last of Us Part II', image: 'https://placehold.co/300x400', platform: 'PS5', pin: false, complete: false, achievements: [
+                        { name: 'Survivor', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false, complete: false },
+                        { name: 'Master of Stealth', description: 'Complete the game using only stealth tactics.', increment: 1, pin: false, favorite: true, complete: false },
+                        { name: 'Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: false, complete: false },
                     ]
                 },
                 
@@ -60,8 +60,18 @@ const app = createApp({
         };
     },
 
-    // methods: usually "events" triggered by v-on:
+
     methods: {
+        closeModal: function (modalId) {
+            const modalElement = document.getElementById(modalId);
+            if (!modalElement || !window.bootstrap) {
+                return;
+            }
+
+            const modal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+            modal.hide();
+        },
+
         selectGame: function (game) {
             this.selectedGame = game;
         },
@@ -78,6 +88,8 @@ const app = createApp({
                 favorite: false,
                 achievements: [],
             };
+
+            this.closeModal('addGameModal');
         },
 
         addNewAchievement: function (game) {
@@ -90,13 +102,14 @@ const app = createApp({
                 increment: 0,
                 pin: false,
                 favorite: false,
+                complete: false,
             };
         }
 
 
     },
 
-    // computed: values that are updated and cached if dependencies change
+
     computed: {
         favoritedGames: function () {
             return this.gameList.filter(game => game.favorite);
@@ -119,26 +132,29 @@ const app = createApp({
             }
             return [];
         },
+        
+        allFavoritedAchievements: function () {
+            let favorited = [];
+            this.gameList.forEach(game => {
+                favorited = favorited.concat(game.achievements.filter(achievement => achievement.favorite));
+            });
+            return favorited;
+        },
 
     },
 
-    //mounted:  called after the instance has been mounted,
+
     mounted: function () {
         if (localStorage.getItem('gameList')) {
             this.gameList = JSON.parse(localStorage.getItem('gameList'));
         }
 
-        if (this.gameList.length > 0) {
-            this.selectedGame = this.gameList[0];
-        }
-
     },
 
-    // watch:   calls the function if the value changes
-    // https://travishorn.com/add-localstorage-to-your-vue-app-in-2-lines-of-code-56eb2c9f371b
+
     watch: {
         gameList: {
-            handler: function (newVal) {
+            handler: function (newVal, oldVal) {
                 localStorage.setItem('gameList', JSON.stringify(newVal));
             },
             deep: true

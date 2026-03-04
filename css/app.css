@@ -11995,6 +11995,11 @@ ul hr {
   opacity: 0.5;
 }
 
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
 .checkbox {
   width: 30px;
   height: 30px;
