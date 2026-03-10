@@ -58,84 +58,24 @@
 
                                 <!-- desktop version of game list -->
                                 <div class="container desktop">
-                                    <h4 class="fw-bolder fst-italic fs-5 pt-4">Pinned Games</h4>
-                                    <img src="/images/game-divider.png" alt="" class="game-divider">
-                                    <ul class="ps-2 desktop" v-for="(game, g) in pinnedGames" :key="game.name">
-
-                                        <li class="mt-3 text-break">
-                                            <a id="selectedGame" class="text-decoration-none text-black"
-                                                @click.prevent="selectGame(game)">{{ game.name }}
-                                                <hr>
-                                            </a>
-                                        </li>
-
-                                    </ul>
+                                    <game-list name="Pinned Games" :list-of-items="pinnedGames"
+                                        @select-game="selectGame"></game-list>
 
                                     <p><i class="bi bi-suit-diamond-fill"></i></p>
 
 
-                                    <h4 class="fw-bolder fst-italic fs-5 pt-4">All Games</h4>
-                                    <img src="/images/game-divider.png" alt="" class="game-divider">
-                                    <ul class="ps-2 desktop" v-for="(game, g) in gameList" :key="game.name">
-
-                                        <li class="mt-3 text-break">
-                                            <a id="selectedGame" class="text-decoration-none text-black"
-                                                @click.prevent="selectGame(game)">{{ game.name }}
-                                                <hr>
-                                            </a>
-                                        </li>
-
-                                    </ul>
+                                    <game-list name="All Games" :list-of-items="gameList"
+                                        @select-game="selectGame"></game-list>
                                 </div>
 
                                 <!-- mobile version of game list -->
                                 <div class="accordion mb-3 mobile" id="mobileGameList">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#pinnedGames"
-                                                aria-expanded="true" aria-controls="pinnedGames">
-                                                Pinned Games
-                                            </button>
-                                        </h2>
-                                        <div id="pinnedGames" class="accordion-collapse collapse"
-                                            data-bs-parent="#mobileGameList">
-                                            <div class="accordion-body">
-                                                <ul class="ps-2" v-for="(game, g) in pinnedGames" :key="game.name">
+                                    <game-list-mobile name="Pinned Games" :list-of-items="pinnedGames"
+                                        :id="'pinnedGames'" @select-game="selectGame"></game-list-mobile>
 
-                                                    <li class="mt-3 text-break fw-bold">
-                                                        <a id="selectedGame" class="text-decoration-none text-black"
-                                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
-                                                        <hr>
-                                                    </li>
+                                    <game-list-mobile name="All Games" :id="'allGames'" :list-of-items="gameList"
+                                        @select-game="selectGame"></game-list-mobile>
 
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#allGames"
-                                                aria-expanded="false" aria-controls="allGames">
-                                                All Games
-                                            </button>
-                                        </h2>
-                                        <div id="allGames" class="accordion-collapse collapse"
-                                            data-bs-parent="#mobileGameList">
-                                            <div class="accordion-body">
-                                                <ul class="ps-2" v-for="(game, g) in gameList" :key="game.name">
-
-                                                    <li class="mt-3 text-break fw-bold">
-                                                        <a id="selectedGame" class="text-decoration-none text-black"
-                                                            @click.prevent="selectGame(game)">{{ game.name }}</a>
-                                                        <hr>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -186,62 +126,62 @@
                                             <h3 class="fs-2">Achievements</h3>
                                         </div>
                                         <div class="col-4 d-flex align-items-center justify-content-end">
-                                            <button class="btn btn-sm btn-dark" data-bs-toggle="modal"
-                                                data-bs-target="#addAchievementModal">Add New</button>
+                                            <button class="btn btn-sm btn-dark border border-black rounded-0"
+                                                data-bs-toggle="modal" data-bs-target="#addAchievementModal">Add
+                                                New</button>
                                         </div>
                                     </div>
 
                                     <ul class="ps-3w-100" v-if="selectedGame.achievements.length > 0">
-                                        <li v-for="(achievement, a) in selectedGame.achievements" :key="a"
-                                            class="m-2 border border-0 border-black">
 
+                                        <li v-for="(achievement, a) in pinnedAchievementsFirst" :key="a" class="m-2 border border-0 border-black">
                                             <hr>
-                                            <div class="row">
 
-                                                <div class="col-1 p-0">
-                                                    <div class="h-100 d-flex align-items-center justify-content-center">
-                                                        <input class="form-check-input checkbox" type="checkbox"
-                                                            :id="'achievementCheck' + a" value="" aria-label="...">
-                                                    </div>
-                                                </div>
+                                            <div class="row">
 
                                                 <div class="col-11">
                                                     <div class="row mb-2">
-
-                                                        <div class="col-10">
-                                                            <strong class="fs-3 text-center">{{ achievement.name
-                                                                }}</strong>
+                                                        <div class="col-1 p-0">
+                                                            <div
+                                                                class="h-100 d-flex align-items-center justify-content-center">
+                                                                <input class="form-check-input checkbox" type="checkbox"
+                                                                    :id="'achievementCheck' + a" value=""
+                                                                    aria-label="...">
+                                                            </div>
                                                         </div>
-
-                                                        <div class="col-2">
-
+                                                        <div class="col-10">
+                                                            <h4 class="fs-3">
+                                                                {{ achievement.name }} <i class="btn-icon"
+                                                                    :class="achievement.favorite ? 'bi bi-star-fill' : 'bi bi-star'"
+                                                                    @click.prevent="favoriteAchievement(achievement)"></i>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-1">
                                                             <div class="row">
                                                                 <div
                                                                     class="col-12 d-flex align-items-center justify-content-end">
-
                                                                     <a href=""
+                                                                        @click.prevent="pinAchievement(achievement)"
                                                                         class="d-flex align-items-center justify-content-end">
                                                                         <img :src="achievement.pin ? '/images/waypoint-filled.png' : '/images/waypoint.png'"
                                                                             alt="" class="achieve-pin">
                                                                     </a>
-
                                                                 </div>
-
                                                             </div>
-
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
+                                                        <div class="col-1"></div>
 
-                                                        <div class="col-12 mb-2">
+                                                        <div class="col-11 mb-2">
                                                             <div>{{ achievement.description }}</div>
                                                         </div>
-
-
                                                     </div>
 
                                                     <div class="row">
+
+                                                        <div class="col"></div>
 
                                                         <div class="col-4">
 
@@ -253,7 +193,6 @@
                                                                         achievement.increment }}</span>
                                                                     <p>time(s)</p>
                                                                 </div>
-
                                                                 <div
                                                                     class="col-3 d-flex align-items-center justify-content-center p-0">
                                                                     <button class="btn btn-sm btn-dark increment-btn"
@@ -261,20 +200,17 @@
                                                                             class="bi bi-plus-lg"></i></button>
 
                                                                 </div>
-
                                                                 <div class="col-3 d-flex align-items-center p-0">
                                                                     <button class="btn btn-sm increment-btn"
                                                                         @click="achievement.increment > 0 ? achievement.increment-- : 0"><i
-                                                                            class="bi bi-dash-lg text-dark"></i></button>
-
+                                                                            class="bi bi-dash-lg text-dark"></i
+                                                                    ></button>
                                                                 </div>
-
                                                             </div>
 
                                                         </div>
 
-                                                        <div class="col-6"></div>
-
+                                                        <div class="col-5"></div>
 
                                                         <div
                                                             class="col-2 d-flex align-items-center justify-content-end">
@@ -283,15 +219,12 @@
                                                         </div>
 
                                                     </div>
-
                                                 </div>
-
                                             </div>
-
-
-
                                         </li>
+
                                     </ul>
+
                                 </div>
 
                                 <!-- displays all favorited achievements by default if no game is selected -->
@@ -301,8 +234,7 @@
                                         <img src="/images/game-divider.png" alt="" class="game-divider">
 
                                         <div class="container">
-                                            <ul class="ps-2"
-                                                v-for="(achievement, a) in allFavoritedAchievements"
+                                            <ul class="ps-2" v-for="(achievement, a) in allFavoritedAchievements"
                                                 :key="achievement.name">
 
                                                 <li class="mt-3 text-break">
@@ -350,13 +282,13 @@
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <form @submit.prevent="addNewGame()" class="modal-content">
-                        <div class="modal-content">
-                            <div class="modal-header">
+                        <div class="modal-content parchment-background border border-black rounded-0">
+                            <div class="modal-header border border-black rounded-0">
                                 <h5 class="modal-title text-center" id="modalTitle">Add Game</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body border border-black">
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
                                     <input id="title" type="text" class="form-control" v-model="newGame.name" required>
@@ -377,10 +309,50 @@
                                         placeholder="https://placehold.co/300x400" required>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Nevermind</button>
-                                <button type="submit" class="btn btn-primary">Add It</button>
+                            <div class="modal-footer border border-black rounded-0">
+                                <button type="submit" class="btn submit-btn">Add It</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal">Nevermind</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- edit game modal -->
+            <div class="modal fade" id="editGameModal" tabindex="-1" role="dialog" aria-labelledby="GameModal"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form @submit.prevent="addNewGame()" class="modal-content">
+                        <div class="modal-content parchment-background border border-black rounded-0">
+                            <div class="modal-header border border-black rounded-0">
+                                <h5 class="modal-title text-center" id="modalTitle">Add Game</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body border border-black">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input id="title" type="text" class="form-control" v-model="newGame.name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Platform</label>
+                                    <select id="category" class="form-select" v-model="newGame.platform" required>
+                                        <option value="" disabled>Choose one</option>
+                                        <option value="Steam">Steam</option>
+                                        <option value="Xbox">Xbox</option>
+                                        <option value="PlayStation">PlayStation</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image Link</label>
+                                    <input id="image" type="text" class="form-control" v-model="newGame.image"
+                                        placeholder="https://placehold.co/300x400" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer border border-black rounded-0">
+                                <button type="submit" class="btn submit-btn">Add It</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal">Nevermind</button>
                             </div>
                         </div>
                     </form>
@@ -393,7 +365,7 @@
                 aria-labelledby="AchievementModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <form @submit.prevent="addNewAchievement(selectedGame)" class="modal-content">
-                        <div class="modal-content">
+                        <div class="modal-content parchment-background border border-black rounded-0">
                             <div class="modal-header">
                                 <h5 class="modal-title text-center" id="modalTitle">Add Achievement</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"

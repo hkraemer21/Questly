@@ -1,8 +1,15 @@
 import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import GameList from "./components/GameList.js";
+import GameListMobile from "./components/GameListMobile.js";
 
 
 
 const app = createApp({
+
+    components: {
+        GameList,
+        GameListMobile,
+    },
 
     data: function () {
         return {
@@ -104,7 +111,19 @@ const app = createApp({
                 favorite: false,
                 complete: false,
             };
-        }
+        },
+
+        pinGame: function (game) {
+            game.pin = !game.pin;
+        },
+
+        pinAchievement: function (achievement) {
+            achievement.pin = !achievement.pin;
+        },
+
+        favoriteAchievement: function (achievement) {
+            achievement.favorite = !achievement.favorite;
+        },
 
 
     },
@@ -126,11 +145,18 @@ const app = createApp({
             return [];
         },
 
-        pinnedAchievements: function () {
+        pinnedAchievementsFirst: function () {
             if (this.selectedGame) {
-                return this.selectedGame.achievements.filter(achievement => achievement.pin);
+                return this.selectedGame.achievements.slice().sort((a, b) => {
+                    if (a.pin && !b.pin) {
+                        return -1;
+                    } else if (!a.pin && b.pin) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
             }
-            return [];
         },
         
         allFavoritedAchievements: function () {
