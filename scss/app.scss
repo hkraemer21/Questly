@@ -140,7 +140,7 @@ ul hr {
 }
 
 .quill-img {
-    width: 75%;
+    width: 100%;
 }
 
 .edit-btn {
@@ -152,6 +152,10 @@ ul hr {
 .edit-btn:hover {
     cursor: pointer;
     opacity: 0.5;
+}
+
+.btn-icon {
+    color: black;
 }
 
 .btn-icon:hover {

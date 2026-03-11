@@ -86,10 +86,12 @@
 
                                 <div id="selectedGameInfo" v-if="selectedGame" class="p-3">
 
+                                    <!-- game info -->
                                     <div class="text-center">
                                         <div class="row">
                                             <div class="col-1 position-relative ">
-                                                <a href="" class="position-absolute top-0 end-0 text-black">
+                                                <a href="" class="position-absolute top-0 end-0 text-black"
+                                                    @click.prevent="pinGame(selectedGame)">
                                                     <img :src="selectedGame.pin ? '/images/waypoint-filled.png' : '/images/waypoint.png'"
                                                         alt="" class="pin-img">
                                                 </a>
@@ -98,6 +100,7 @@
                                             </div>
                                             <div class="col-8">
                                                 <h2 class="text-break">{{ selectedGame.name }} <i
+                                                        @click.prevent="deleteGame(selectedGame)"
                                                         class="btn-icon bi bi-trash2-fill"></i>
                                                 </h2>
                                             </div>
@@ -119,111 +122,11 @@
                                         <img src="/images/game-divider.png" alt="" class="game-divider">
                                     </div>
 
-                                    <div class="row p-3 pb-0">
-                                        <div class="col-4">
-                                        </div>
-                                        <div class="col-4 d-flex align-items-center justify-content-center">
-                                            <h3 class="fs-2">Achievements</h3>
-                                        </div>
-                                        <div class="col-4 d-flex align-items-center justify-content-end">
-                                            <button class="btn btn-sm btn-dark border border-black rounded-0"
-                                                data-bs-toggle="modal" data-bs-target="#addAchievementModal">Add
-                                                New</button>
-                                        </div>
-                                    </div>
+                                    <!-- achievements -->
 
-                                    <ul class="ps-3w-100" v-if="selectedGame.achievements.length > 0">
-
-                                        <li v-for="(achievement, a) in pinnedAchievementsFirst" :key="a" class="m-2 border border-0 border-black">
-                                            <hr>
-
-                                            <div class="row">
-
-                                                <div class="col-11">
-                                                    <div class="row mb-2">
-                                                        <div class="col-1 p-0">
-                                                            <div
-                                                                class="h-100 d-flex align-items-center justify-content-center">
-                                                                <input class="form-check-input checkbox" type="checkbox"
-                                                                    :id="'achievementCheck' + a" value=""
-                                                                    aria-label="...">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-10">
-                                                            <h4 class="fs-3">
-                                                                {{ achievement.name }} <i class="btn-icon"
-                                                                    :class="achievement.favorite ? 'bi bi-star-fill' : 'bi bi-star'"
-                                                                    @click.prevent="favoriteAchievement(achievement)"></i>
-                                                            </h4>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-12 d-flex align-items-center justify-content-end">
-                                                                    <a href=""
-                                                                        @click.prevent="pinAchievement(achievement)"
-                                                                        class="d-flex align-items-center justify-content-end">
-                                                                        <img :src="achievement.pin ? '/images/waypoint-filled.png' : '/images/waypoint.png'"
-                                                                            alt="" class="achieve-pin">
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-1"></div>
-
-                                                        <div class="col-11 mb-2">
-                                                            <div>{{ achievement.description }}</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-
-                                                        <div class="col"></div>
-
-                                                        <div class="col-4">
-
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-6 d-flex align-items-center justify-content-center">
-                                                                    <span
-                                                                        class="fs-2 mb-2 border border-0 border-bottom border-black me-2">{{
-                                                                        achievement.increment }}</span>
-                                                                    <p>time(s)</p>
-                                                                </div>
-                                                                <div
-                                                                    class="col-3 d-flex align-items-center justify-content-center p-0">
-                                                                    <button class="btn btn-sm btn-dark increment-btn"
-                                                                        @click="achievement.increment++"><i
-                                                                            class="bi bi-plus-lg"></i></button>
-
-                                                                </div>
-                                                                <div class="col-3 d-flex align-items-center p-0">
-                                                                    <button class="btn btn-sm increment-btn"
-                                                                        @click="achievement.increment > 0 ? achievement.increment-- : 0"><i
-                                                                            class="bi bi-dash-lg text-dark"></i
-                                                                    ></button>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-5"></div>
-
-                                                        <div
-                                                            class="col-2 d-flex align-items-center justify-content-end">
-                                                            <button class="btn btn-md border border-0 fs-1 p-0"><i
-                                                                    class="bi bi-trash2-fill"></i></button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                    <achievement-list name="Achievements" :list-of-items="sortedAchievements" :game="selectedGame"
+                                        @favorite-achievement="favoriteAchievement"
+                                        @pin-achievement="pinAchievement" @delete-achievement="deleteAchievement">
 
                                 </div>
 
@@ -270,9 +173,8 @@
 
                 </div>
 
-                <div class="col-1">
+                <div class="col-1"></div>
 
-                </div>
             </div>
 
 
@@ -311,7 +213,7 @@
                             </div>
                             <div class="modal-footer border border-black rounded-0">
                                 <button type="submit" class="btn submit-btn">Add It</button>
-                                <button type="button" class="btn" data-bs-dismiss="modal">Nevermind</button>
+                                <button type="button" class="btn text-decoration-underline fw-bold" data-bs-dismiss="modal">Nevermind</button>
                             </div>
                         </div>
                     </form>
@@ -319,24 +221,24 @@
             </div>
 
             <!-- edit game modal -->
-            <div class="modal fade" id="editGameModal" tabindex="-1" role="dialog" aria-labelledby="GameModal"
+            <!-- <div class="modal fade" id="editGameModal" tabindex="-1" role="dialog" aria-labelledby="GameModal"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form @submit.prevent="addNewGame()" class="modal-content">
+                    <form @submit.prevent="saveEditedGame()" class="modal-content">
                         <div class="modal-content parchment-background border border-black rounded-0">
                             <div class="modal-header border border-black rounded-0">
-                                <h5 class="modal-title text-center" id="modalTitle">Add Game</h5>
+                                <h5 class="modal-title text-center" id="modalTitle">Edit Game</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body border border-black">
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
-                                    <input id="title" type="text" class="form-control" v-model="newGame.name" required>
+                                    <input id="title" type="text" class="form-control" v-model="editGameForm.name">
                                 </div>
                                 <div class="mb-3">
                                     <label for="category" class="form-label">Platform</label>
-                                    <select id="category" class="form-select" v-model="newGame.platform" required>
+                                    <select id="category" class="form-select" v-model="editGameForm.platform">
                                         <option value="" disabled>Choose one</option>
                                         <option value="Steam">Steam</option>
                                         <option value="Xbox">Xbox</option>
@@ -346,18 +248,18 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Image Link</label>
-                                    <input id="image" type="text" class="form-control" v-model="newGame.image"
-                                        placeholder="https://placehold.co/300x400" required>
+                                    <input id="image" type="text" class="form-control" v-model="editGameForm.image"
+                                        placeholder="https://placehold.co/300x400">
                                 </div>
                             </div>
                             <div class="modal-footer border border-black rounded-0">
-                                <button type="submit" class="btn submit-btn">Add It</button>
+                                <button type="submit" class="btn submit-btn">Save Changes</button>
                                 <button type="button" class="btn" data-bs-dismiss="modal">Nevermind</button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- add achievement modal -->
@@ -371,7 +273,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body border border-black">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <input id="name" type="text" class="form-control" v-model="newAchievement.name"
@@ -387,16 +289,49 @@
                                     <input id="times" type="number" class="form-control" v-model="newAchievement.times">
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Nevermind</button>
-                                <button type="submit" class="btn btn-primary">Add It</button>
+                            <div class="modal-footer border border-black rounded-0">
+                                <button type="submit" class="btn submit-btn">Add It</button>
+                                <button type="button" class="btn text-decoration-underline fw-bold" data-bs-dismiss="modal">Nevermind</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
 
+            <!-- edit achievement modal -->
+            <!-- <div class="modal fade" id="editAchievementModal" tabindex="-1" role="dialog"
+                aria-labelledby="AchievementModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form @submit.prevent="saveEditedAchievement" class="modal-content">
+                        <div class="modal-content parchment-background border border-black rounded-0">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="modalTitle">Edit Achievement</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body border border-black">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input id="name" type="text" class="form-control" v-model="editAchievementForm.name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea id="description" class="form-control" aria-label="With textarea"
+                                        v-model="editAchievementForm.description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="times" class="form-label"># of times</label>
+                                    <input id="times" type="number" class="form-control" v-model="editAchievementForm.times">
+                                </div>
+                            </div>
+                            <div class="modal-footer border border-black rounded-0">
+                                <button type="submit" class="btn submit-btn">Save Changes</button>
+                                <button type="button" class="btn text-decoration-underline fw-bold" data-bs-dismiss="modal">Nevermind</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
 
         </div>
 

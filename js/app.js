@@ -1,6 +1,8 @@
 import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import GameList from "./components/GameList.js";
 import GameListMobile from "./components/GameListMobile.js";
+import AchievementList from "./components/AchievementList.js";
+import AddGameModal from "./components/AddGameModal.js";
 
 
 
@@ -9,6 +11,8 @@ const app = createApp({
     components: {
         GameList,
         GameListMobile,
+        AchievementList,
+        AddGameModal,
     },
 
     data: function () {
@@ -35,32 +39,45 @@ const app = createApp({
 
             gameList: [
                 {
-                    name: 'Resident Evil 2 Remake', image: 'https://placehold.co/300x400', platform: 'PC', pin: true, complete: true, achievements: [
+                    name: 'Resident Evil 2 Remake', image: 'https://bigrednerd.com/wp-content/uploads/2025/01/udfogvnmttclvmtwjj0njgwc2488844306262883277.jpeg', platform: 'PC', pin: true, complete: true, achievements: [
                         { name: 'Welcome to Raccoon City', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: true, complete: true },
                         { name: 'Survivor', description: 'Complete the game on Normal or higher difficulty.', increment: 1, pin: false, favorite: false, complete: false },
                         { name: 'Master of Unlocking', description: 'Unlock all the weapons and items in the game.', increment: 1, pin: false, favorite: false, complete: false },
                     ]
                 },
                 {
-                    name: 'God of War: Ragnarok', image: 'https://placehold.co/300x400', platform: 'PS5', pin: false, complete: false, achievements: [
+                    name: 'God of War: Ragnarok', image: 'https://djmmtgamechangerdoc.wordpress.com/wp-content/uploads/2022/10/god-of-war-ragnarok-cover.jpg?w=1920', platform: 'PS5', pin: false, complete: false, achievements: [
                         { name: 'Ragnarok Unleashed', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false, complete: false },
                         { name: 'Valhalla Conqueror', description: 'Complete the game on Hard difficulty.', increment: 1, pin: false, favorite: false, complete: false },
                         { name: 'Mythical Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: true, complete: false },
                     ]
                 },
                 {
-                    name: 'The Last of Us Part II', image: 'https://placehold.co/300x400', platform: 'PS5', pin: false, complete: false, achievements: [
+                    name: 'The Last of Us Part II', image: 'https://images.g2a.com/323x433/1x1x1/the-last-of-us-part-ii-remastered-p10000503120/7038c548cc6e48a49931a751', platform: 'PS5', pin: false, complete: false, achievements: [
                         { name: 'Survivor', description: 'Complete the game on any difficulty.', increment: 1, pin: false, favorite: false, complete: false },
                         { name: 'Master of Stealth', description: 'Complete the game using only stealth tactics.', increment: 1, pin: false, favorite: true, complete: false },
                         { name: 'Collector', description: 'Collect all the collectibles in the game.', increment: 1, pin: false, favorite: false, complete: false },
                     ]
                 },
-                
+
 
             ],
 
             isPinHovered: false,
 
+            editingGame: null,
+            editGameForm: {
+                name: '',
+                image: '',
+                platform: '',
+            },
+
+            editingAchievement: null,
+            editAchievementForm: {
+                name: "",
+                description: "",
+                increment: 0
+            },
 
 
 
@@ -69,6 +86,7 @@ const app = createApp({
 
 
     methods: {
+
         closeModal: function (modalId) {
             const modalElement = document.getElementById(modalId);
             if (!modalElement || !window.bootstrap) {
@@ -111,6 +129,8 @@ const app = createApp({
                 favorite: false,
                 complete: false,
             };
+
+            this.closeModal('addAchievementModal');
         },
 
         pinGame: function (game) {
@@ -123,6 +143,24 @@ const app = createApp({
 
         favoriteAchievement: function (achievement) {
             achievement.favorite = !achievement.favorite;
+        },
+
+        deleteGame: function (game) {
+            const index = this.gameList.indexOf(game);
+            if (index > -1) {
+                this.gameList.splice(index, 1);
+            }
+            if (this.selectedGame === game) {
+                this.selectedGame = null;
+            }
+
+        },
+
+        deleteAchievement: function (achievement) {
+            const index = this.selectedGame.achievements.indexOf(achievement);
+            if (index > -1) {
+                this.selectedGame.achievements.splice(index, 1);
+            }
         },
 
 
@@ -145,20 +183,25 @@ const app = createApp({
             return [];
         },
 
-        pinnedAchievementsFirst: function () {
+        // sorting achievements with pinned at the top and completed at the bottom, while keeping the rest in their original order
+        sortedAchievements: function () {
             if (this.selectedGame) {
                 return this.selectedGame.achievements.slice().sort((a, b) => {
                     if (a.pin && !b.pin) {
                         return -1;
                     } else if (!a.pin && b.pin) {
                         return 1;
+                    } else if (a.complete && !b.complete) {
+                        return 1;
+                    } else if (!a.complete && b.complete) {
+                        return -1;
                     } else {
                         return 0;
                     }
                 });
             }
         },
-        
+
         allFavoritedAchievements: function () {
             let favorited = [];
             this.gameList.forEach(game => {
