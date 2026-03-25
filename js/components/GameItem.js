@@ -22,7 +22,7 @@ const GameItem = {
     template: `
 
         <li class="mt-3 text-break">
-            <a id="selectedGame" class="text-decoration-none text-black"
+            <a id="selectedGame" class="text-decoration-none text-black body fw-semibold"
                 @click="$emit('select-game', game)">{{ game.name }}
                 <hr>
             </a>

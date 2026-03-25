@@ -52,7 +52,7 @@ const AddGameModal = {
     template: `
 
         <div>
-            <button class="btn fw-bolder fst-italic fs-4 border border-2 border-black rounded-0 w-75 p-2 ps-2 pe-2"
+            <button class="btn header fw-bolder fs-4 border border-2 border-black rounded-0 w-75 p-2 ps-2 pe-2"
                 @click="$refs.modal.open()" title="Add Game">Add Game
             </button>
             <app-modal title="Add Game" ref="modal" @submit="addNewGame()">

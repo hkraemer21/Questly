@@ -20,10 +20,10 @@ const AchievementList = {
                     <div class="col-4"></div>
 
                 <div class="col-4 d-flex align-items-center justify-content-center">
-                    <h3 class="fs-2">{{ name }}</h3>
+                    <h3 class="fs-2 header">{{ name }}</h3>
                 </div>
                 <div class="col-4 d-flex align-items-center justify-content-end">
-                    <button class="btn btn-sm btn-dark border border-black rounded-0"
+                    <button class="btn header btn-sm btn-dark border border-black rounded-0"
                         data-bs-toggle="modal" data-bs-target="#addAchievementModal">Add New
                     </button>
                 </div>

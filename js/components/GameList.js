@@ -15,7 +15,7 @@ const GameList = {
     template: `
         <div>
 
-            <h4 class="fw-bolder fst-italic fs-5 pt-4">{{ name }}</h4>
+            <h4 class="fw-bolder fst-italic fs-5 pt-4 header text-center">{{ name }}</h4>
             <img src="/images/game-divider.png" alt="" class="game-divider">
             <ul class="ps-2 desktop">
 

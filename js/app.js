@@ -76,7 +76,8 @@ const app = createApp({
             editAchievementForm: {
                 name: "",
                 description: "",
-                increment: 0
+                increment: 0,
+                favorite: false,
             },
 
 
@@ -161,6 +162,65 @@ const app = createApp({
             if (index > -1) {
                 this.selectedGame.achievements.splice(index, 1);
             }
+        },
+
+        openEditGame: function (game) {
+            this.editingGame = game;
+            this.editGameForm = {
+                name: game.name,
+                image: game.image,
+                platform: game.platform,
+            };
+        },
+
+        saveEditedGame: function () {
+            if (!this.editingGame) {
+                return;
+            }
+
+            this.editingGame.name = this.editGameForm.name;
+            this.editingGame.image = this.editGameForm.image;
+            this.editingGame.platform = this.editGameForm.platform;
+
+            this.closeModal('editGameModal');
+
+            this.editingGame = null;
+            this.editGameForm = {
+                name: '',
+                image: '',
+                platform: '',
+            };
+        },
+
+        openEditAchievement: function (achievement) {
+            this.editingAchievement = achievement;
+            this.editAchievementForm = {
+                name: achievement.name,
+                description: achievement.description,
+                increment: achievement.increment,
+                favorite: achievement.favorite,
+            };
+        },
+
+        saveEditedAchievement: function () {
+            if (!this.editingAchievement) {
+                return;
+            }
+
+            this.editingAchievement.name = this.editAchievementForm.name;
+            this.editingAchievement.description = this.editAchievementForm.description;
+            this.editingAchievement.increment = Number(this.editAchievementForm.increment) || 0;
+            this.editingAchievement.favorite = this.editAchievementForm.favorite;
+
+            this.closeModal('editAchievementModal');
+
+            this.editingAchievement = null;
+            this.editAchievementForm = {
+                name: "",
+                description: "",
+                increment: 0,
+                favorite: false,
+            };
         },
 
 

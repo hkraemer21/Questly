@@ -1,4 +1,5 @@
 $primary-font: 'Eagle Lake', serif;
+$secondary-font: 'Oldenburg', serif;
 
 $primary: #d4b996;
 $secondary: #402219;
@@ -10,9 +11,14 @@ $footer-height: 72px;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-body {
+.header {
     font-family: $primary-font;
 }
+
+.body {
+    font-family: $secondary-font;
+}
+
 
 a {
     color: white;
@@ -31,14 +37,14 @@ p {
 
 // ********** START: Background Image Styling **********
 .parchment-background {
-    background-image: url('/images/parchment-bg.jpg');
+    background-image: url('../images/parchment-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .wooden-background {
-    background-image: url('/images/wood-bg.jpg');
+    background-image: url('../images/wood-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -59,6 +65,7 @@ p {
 }
 
 .brand-name {
+    font-family: $primary-font;
     font-size: 1.5rem;
     color: white;
 }
@@ -136,11 +143,11 @@ ul hr {
 }
 
 .pin-img {
-    width: 50%;
+    height: 50px;
 }
 
 .quill-img {
-    width: 100%;
+    height: 50px;
 }
 
 .edit-btn {
@@ -189,14 +196,14 @@ ul hr {
     border-radius: 0;
 }
 
-.increment-btn {
-    border: 2px solid black;
-    border-radius: 0px;
-}
-
 .achieve-pin {
     width: auto;
-    height: 50px;
+    height: 45px;
+}
+
+.achieve-quill {
+    width: auto;
+    height: 40px;
 }
 
 // ********** END: Achievements Styling **********
@@ -227,4 +234,5 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: $secondary-font;
 }

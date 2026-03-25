@@ -17,8 +17,8 @@ const GameList = {
         <div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button"
+                <h2 class="accordion-header ">
+                    <button class="accordion-button collapsed header" type="button"
                         data-bs-toggle="collapse" :data-bs-target="'#' + id"
                         aria-expanded="true" :aria-controls="id">
                         {{ name }}
